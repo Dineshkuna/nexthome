@@ -7,16 +7,48 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
     <style>
+        :root {
+            --primary-purple: #5e35b1;
+            --primary-purple-dark: #4527a0;
+            --primary-red: #ff0000;
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95) !important;
+            padding: 0.5rem 0;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            color: var(--primary-purple) !important;
+        }
+
+        .nav-link {
+            color: #333 !important;
+            padding: 0.5rem 1rem !important;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-purple) !important;
+        }
+
         .hero-section {
             background-image: url('https://images.pexels.com/photos/954585/pexels-photo-954585.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
             background-size: cover;
             background-position: center;
             position: relative;
-            height: 600px;
+            height: 100vh;
+            display: flex;
+            align-items: center;
         }
 
         .hero-overlay {
-            background: linear-gradient(to right, rgba(0,0,0,0.7), transparent);
+            background: linear-gradient(90deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0) 100%);
             position: absolute;
             top: 0;
             left: 0;
@@ -24,66 +56,246 @@
             bottom: 0;
         }
 
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding-top: 80px;
+        }
+
+        .hero-dots {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+        }
+
+        .hero-dot {
+            width: 12px;
+            height: 12px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 50%;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .hero-dot.active {
+            background: white;
+        }
+
+        .stats-section {
+            background-color: #f8f9fa;
+            padding: 80px 0;
+        }
+
         .stat-card {
+            text-align: center;
+            padding: 40px 20px;
             transition: transform 0.3s;
         }
 
         .stat-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px);
         }
 
-        .blog-card {
-            transition: all 0.3s;
+        .stat-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
         }
 
-        .blog-card:hover {
-            transform: translateY(-5px);
+        .stat-icon.green {
+            background-color: #4caf50;
         }
 
-        .blog-card img {
-            transition: transform 0.5s;
+        .stat-icon.blue {
+            background-color: var(--primary-purple);
         }
 
-        .blog-card:hover img {
-            transform: scale(1.1);
+        .stat-icon.red {
+            background-color: var(--primary-red);
+        }
+
+        .portfolio-section {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .portfolio-image {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .well-being-section {
+            background: #000;
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        .orbit {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border: 1px dashed rgba(255,255,255,0.2);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .core-values-section {
+            padding: 80px 0;
+            background: #f8f9fa;
         }
 
         .value-card {
-            transition: transform 0.3s;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+            border: 1px solid rgba(0,0,0,0.1);
         }
 
         .value-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
-        .primary-color {
-            color: #5e35b1;
+        .blog-section {
+            padding: 80px 0;
+            background: white;
         }
 
-        .bg-primary-custom {
-            background-color: #5e35b1;
+        .blog-card {
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s;
         }
 
-        .btn-primary-custom {
-            background-color: #5e35b1;
-            color: white;
+        .blog-card:hover {
+            transform: translateY(-10px);
         }
 
-        .btn-primary-custom:hover {
-            background-color: #4527a0;
-            color: white;
+        .blog-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .blog-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .blog-card:hover .blog-image img {
+            transform: scale(1.1);
         }
 
         .footer {
-            background: linear-gradient(to right, #5e35b1, #7e57c2);
+            background: linear-gradient(135deg, var(--primary-purple) 0%, #7e57c2 100%);
+            color: white;
+            padding: 80px 0 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 30%;
+            height: 100%;
+            background: rgba(255,255,255,0.1);
+            border-radius: 100% 0 0 0;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .subscribe-form {
+            position: relative;
+        }
+
+        .subscribe-form input {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: white;
+            padding: 15px;
+            border-radius: 30px;
+            width: 100%;
+        }
+
+        .subscribe-form button {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background: white;
+            color: var(--primary-purple);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: all 0.3s;
+        }
+
+        .subscribe-form button:hover {
+            background: rgba(255,255,255,0.9);
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                height: 500px;
+            }
+            
+            .hero-dots {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <nav class="navbar navbar-expand-lg bg-white fixed-top shadow-sm">
+    <!-- Navigation dots -->
+    <div class="hero-dots d-none d-lg-block">
+        <div class="hero-dot active"></div>
+        <div class="hero-dot"></div>
+        <div class="hero-dot"></div>
+        <div class="hero-dot"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
-            <a class="navbar-brand primary-color fw-semibold" href="#">eugia</a>
+            <a class="navbar-brand" href="#">eugia</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -103,17 +315,19 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero-section d-flex align-items-center">
+    <section class="hero-section">
         <div class="hero-overlay"></div>
-        <div class="container position-relative">
+        <div class="container hero-content">
             <div class="row">
                 <div class="col-lg-6">
-                    <h1 class="text-white mb-2">LEVERAGING SCIENCE FOR</h1>
-                    <h1 class="text-success mb-4">HUMANKIND</h1>
-                    <p class="text-white mb-4">Paving way towards affordable and accessible healthcare for all.</p>
-                    <div class="d-flex flex-column flex-sm-row gap-3">
-                        <button class="btn btn-primary-custom">Discover Our Mission</button>
-                        <button class="btn btn-outline-light">
+                    <h1 class="display-4 text-white fw-bold mb-2">LEVERAGING SCIENCE FOR</h1>
+                    <h1 class="display-4 text-success fw-bold mb-4">HUMANKIND</h1>
+                    <p class="text-white fs-5 mb-5">Paving way towards affordable and accessible healthcare for all.</p>
+                    <div class="d-flex gap-3">
+                        <button class="btn btn-lg px-4" style="background: var(--primary-purple); color: white;">
+                            Discover Our Mission
+                        </button>
+                        <button class="btn btn-lg btn-outline-light px-4">
                             Explore Products <i class="bi bi-arrow-right ms-2"></i>
                         </button>
                     </div>
@@ -123,36 +337,36 @@
     </section>
 
     <!-- Stats Section -->
-    <section class="bg-light py-5">
+    <section class="stats-section">
         <div class="container">
-            <div class="row g-4">
+            <div class="row">
                 <div class="col-md-4">
-                    <div class="stat-card text-center p-4">
-                        <div class="bg-success rounded-circle d-inline-flex p-3 mb-4">
-                            <i class="bi bi-globe text-white fs-4"></i>
+                    <div class="stat-card">
+                        <div class="stat-icon green">
+                            <i class="bi bi-globe text-white fs-3"></i>
                         </div>
-                        <h2 class="fw-bold">120+</h2>
-                        <h5>Countries</h5>
+                        <h2 class="fw-bold mb-3">120+</h2>
+                        <h5 class="mb-3">Countries</h5>
                         <p class="text-muted">We are proud to be operating in over 120+ countries, leveraging our expertise and valuable services across the globe.</p>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="stat-card text-center p-4">
-                        <div class="bg-primary rounded-circle d-inline-flex p-3 mb-4">
-                            <i class="bi bi-people text-white fs-4"></i>
+                    <div class="stat-card">
+                        <div class="stat-icon blue">
+                            <i class="bi bi-people text-white fs-3"></i>
                         </div>
-                        <h2 class="fw-bold">4000+</h2>
-                        <h5>Employees</h5>
+                        <h2 class="fw-bold mb-3">4000+</h2>
+                        <h5 class="mb-3">Employees</h5>
                         <p class="text-muted">Our global team works relentlessly to discover path-breaking innovations which make a difference.</p>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="stat-card text-center p-4">
-                        <div class="bg-danger rounded-circle d-inline-flex p-3 mb-4">
-                            <i class="bi bi-award text-white fs-4"></i>
+                    <div class="stat-card">
+                        <div class="stat-icon red">
+                            <i class="bi bi-award text-white fs-3"></i>
                         </div>
-                        <h2 class="fw-bold">250+</h2>
-                        <h5>Global Approvals</h5>
+                        <h2 class="fw-bold mb-3">250+</h2>
+                        <h5 class="mb-3">Global Approvals</h5>
                         <p class="text-muted">We have over 250 globally approved generics that have furthered our vision of making human lives better.</p>
                     </div>
                 </div>
@@ -161,95 +375,95 @@
     </section>
 
     <!-- Portfolio Section -->
-    <section class="py-5">
+    <section class="portfolio-section">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-lg-6 mb-4 mb-lg-0">
-                    <h4 class="primary-color">OUR PORTFOLIO</h4>
-                    <h2 class="mb-4">We cater to a wide range of medical therapies - from anti-infective to oncology treatments.</h2>
+                <div class="col-lg-6 mb-5 mb-lg-0">
+                    <h4 class="text-uppercase mb-3" style="color: var(--primary-purple);">OUR PORTFOLIO</h4>
+                    <h2 class="fw-bold mb-4">We cater to a wide range of medical therapies - from anti-infective to oncology treatments.</h2>
                     <p class="text-muted mb-4">Our responsibility extends to not just patients, but to the communities around us and to our stakeholders.</p>
-                    <button class="btn btn-primary-custom">
+                    <button class="btn btn-lg px-4" style="background: var(--primary-purple); color: white;">
                         Explore More <i class="bi bi-arrow-right ms-2"></i>
                     </button>
                 </div>
                 <div class="col-lg-6">
-                    <div class="rounded overflow-hidden shadow-lg">
-                        <img src="https://images.pexels.com/photos/3786157/pexels-photo-3786157.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
-                             alt="Medical Research" 
-                             class="img-fluid w-100">
+                    <div class="portfolio-image">
+                        <img src="https://images.pexels.com/photos/3786157/pexels-photo-3786157.jpeg" alt="Portfolio" class="img-fluid w-100">
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Well Being Section -->
+    <section class="well-being-section text-center">
+        <div class="orbit"></div>
+        <!-- Stars will be added via JavaScript -->
+        <div class="container">
+            <h2 class="text-white mb-4">Envisioning a State of <span class="text-danger">GLOBAL WELL-BEING</span></h2>
+            <p class="text-white-50">Our aim is to deliver good health globally, expeditiously. Our therapies extend to unmet medical needs in specialized products such as General Injectables, Oncology, Ophthalmics and Hormonal products.</p>
+        </div>
+    </section>
+
     <!-- Core Values Section -->
-    <section class="bg-light py-5">
+    <section class="core-values-section">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-lg-6 mb-4 mb-lg-0">
-                    <h4>Moving <span class="text-success">FORWARD TOGETHER</span></h4>
+                <div class="col-lg-6 mb-5 mb-lg-0">
+                    <h2 class="mb-4">Moving <span class="text-success">FORWARD TOGETHER</span></h2>
                     <p class="text-muted mb-4">We at eugia believe that medical treatment should be patient-centric and value-oriented. To achieve this we have established 3 fundamental pillars at eugia:</p>
                     <ul class="list-unstyled">
-                        <li class="mb-3">
-                            <span class="bg-success bg-opacity-25 rounded-circle d-inline-flex align-items-center justify-content-center me-2" style="width: 24px; height: 24px;">
+                        <li class="d-flex align-items-center mb-3">
+                            <div class="bg-success bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 30px; height: 30px;">
                                 <span class="text-success">1</span>
-                            </span>
-                            Patient-centric approach
+                            </div>
+                            <span>Patient-centric approach</span>
                         </li>
-                        <li class="mb-3">
-                            <span class="bg-success bg-opacity-25 rounded-circle d-inline-flex align-items-center justify-content-center me-2" style="width: 24px; height: 24px;">
+                        <li class="d-flex align-items-center mb-3">
+                            <div class="bg-success bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 30px; height: 30px;">
                                 <span class="text-success">2</span>
-                            </span>
-                            Scientific excellence
+                            </div>
+                            <span>Scientific excellence</span>
                         </li>
-                        <li>
-                            <span class="bg-success bg-opacity-25 rounded-circle d-inline-flex align-items-center justify-content-center me-2" style="width: 24px; height: 24px;">
+                        <li class="d-flex align-items-center">
+                            <div class="bg-success bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 30px; height: 30px;">
                                 <span class="text-success">3</span>
-                            </span>
-                            Global healthcare accessibility
+                            </div>
+                            <span>Global healthcare accessibility</span>
                         </li>
                     </ul>
                 </div>
                 <div class="col-lg-6">
-                    <div class="row g-4">
-                        <div class="col-12">
-                            <div class="value-card bg-white p-4 rounded shadow-sm border">
-                                <div class="d-flex">
-                                    <div class="bg-primary bg-opacity-10 p-3 rounded me-3">
-                                        <i class="bi bi-heart text-primary fs-4"></i>
-                                    </div>
-                                    <div>
-                                        <h5>Superior Patient Experience</h5>
-                                        <p class="text-muted mb-0">We prioritize patient satisfaction and outcomes in everything we do.</p>
-                                    </div>
-                                </div>
+                    <div class="value-card">
+                        <div class="d-flex align-items-center">
+                            <div class="bg-primary bg-opacity-10 rounded-circle p-3 me-4">
+                                <i class="bi bi-heart-fill text-primary fs-4"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-2">Superior Patient Experience</h5>
+                                <p class="mb-0 text-muted">We prioritize patient satisfaction and outcomes in everything we do.</p>
                             </div>
                         </div>
-                        <div class="col-12">
-                            <div class="value-card bg-white p-4 rounded shadow-sm border">
-                                <div class="d-flex">
-                                    <div class="bg-primary bg-opacity-10 p-3 rounded me-3">
-                                        <i class="bi bi-award text-primary fs-4"></i>
-                                    </div>
-                                    <div>
-                                        <h5>Quality</h5>
-                                        <p class="text-muted mb-0">Maintaining the highest standards in all our products and processes.</p>
-                                    </div>
-                                </div>
+                    </div>
+                    <div class="value-card">
+                        <div class="d-flex align-items-center">
+                            <div class="bg-primary bg-opacity-10 rounded-circle p-3 me-4">
+                                <i class="bi bi-award-fill text-primary fs-4"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-2">Quality</h5>
+                                <p class="mb-0 text-muted">Maintaining the highest standards in all our products and processes.</p>
                             </div>
                         </div>
-                        <div class="col-12">
-                            <div class="value-card bg-white p-4 rounded shadow-sm border">
-                                <div class="d-flex">
-                                    <div class="bg-primary bg-opacity-10 p-3 rounded me-3">
-                                        <i class="bi bi-activity text-primary fs-4"></i>
-                                    </div>
-                                    <div>
-                                        <h5>Value-Based Care</h5>
-                                        <p class="text-muted mb-0">Delivering optimal health outcomes at reasonable costs.</p>
-                                    </div>
-                                </div>
+                    </div>
+                    <div class="value-card">
+                        <div class="d-flex align-items-center">
+                            <div class="bg-primary bg-opacity-10 rounded-circle p-3 me-4">
+                                <i class="bi bi-graph-up text-primary fs-4"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-2">Value-Based Care</h5>
+                                <p class="mb-0 text-muted">Delivering optimal health outcomes at reasonable costs.</p>
                             </div>
                         </div>
                     </div>
@@ -259,53 +473,56 @@
     </section>
 
     <!-- Blog Section -->
-    <section class="py-5">
+    <section class="blog-section">
         <div class="container">
             <div class="text-center mb-5">
-                <h2 class="mb-3">BLOGS & ARTICLES</h2>
-                <div class="bg-primary-custom mx-auto" style="width: 80px; height: 4px;"></div>
-                <p class="text-muted mt-3">Stay updated with the latest research, discoveries, and innovations in the pharmaceutical industry.</p>
+                <h2 class="fw-bold mb-3">BLOGS & ARTICLES</h2>
+                <div class="mx-auto" style="width: 80px; height: 3px; background: var(--primary-purple);"></div>
+                <p class="text-muted mt-4">Stay updated with the latest research, discoveries, and innovations in the pharmaceutical industry.</p>
             </div>
             <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="blog-card card h-100 shadow-sm">
-                        <div class="overflow-hidden">
-                            <img src="https://images.pexels.com/photos/2280551/pexels-photo-2280551.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
-                                 class="card-img-top" alt="Blog Image">
+                <div class="col-lg-4 col-md-6">
+                    <div class="blog-card shadow-sm">
+                        <div class="blog-image">
+                            <img src="https://images.pexels.com/photos/2280551/pexels-photo-2280551.jpeg" alt="Blog">
                         </div>
-                        <div class="card-body">
+                        <div class="p-4">
                             <small class="text-muted">April, 2023</small>
-                            <h5 class="card-title mt-2">How Services Can Ease Your Pain</h5>
-                            <p class="card-text text-muted">Customer-centered software design insights can help improve service delivery and reduce operational costs.</p>
-                            <a href="#" class="primary-color text-decoration-none">Read More <i class="bi bi-arrow-right ms-1"></i></a>
+                            <h5 class="mt-3 mb-3">How Services Can Ease Your Pain</h5>
+                            <p class="text-muted">Customer-centered software design insights can help improve service delivery and reduce operational costs.</p>
+                            <a href="#" class="text-decoration-none" style="color: var(--primary-purple);">
+                                Read More <i class="bi bi-arrow-right ms-2"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="blog-card card h-100 shadow-sm">
-                        <div class="overflow-hidden">
-                            <img src="https://images.pexels.com/photos/3683074/pexels-photo-3683074.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
-                                 class="card-img-top" alt="Blog Image">
+                <div class="col-lg-4 col-md-6">
+                    <div class="blog-card shadow-sm">
+                        <div class="blog-image">
+                            <img src="https://images.pexels.com/photos/3683074/pexels-photo-3683074.jpeg" alt="Blog">
                         </div>
-                        <div class="card-body">
+                        <div class="p-4">
                             <small class="text-muted">Dec 01, 2024</small>
-                            <h5 class="card-title mt-2">Penicillins: Uses, and Mechanism</h5>
-                            <p class="card-text text-muted">Overview of penicillin's discovery and its purpose's today.</p>
-                            <a href="#" class="primary-color text-decoration-none">Read More <i class="bi bi-arrow-right ms-1"></i></a>
+                            <h5 class="mt-3 mb-3">Penicillins: Uses, and Mechanism</h5>
+                            <p class="text-muted">Overview of penicillin's discovery and its purpose's today.</p>
+                            <a href="#" class="text-decoration-none" style="color: var(--primary-purple);">
+                                Read More <i class="bi bi-arrow-right ms-2"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="blog-card card h-100 shadow-sm">
-                        <div class="overflow-hidden">
-                            <img src="https://images.pexels.com/photos/3825586/pexels-photo-3825586.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
-                                 class="card-img-top" alt="Blog Image">
+                <div class="col-lg-4 col-md-6">
+                    <div class="blog-card shadow-sm">
+                        <div class="blog-image">
+                            <img src="https://images.pexels.com/photos/3825586/pexels-photo-3825586.jpeg" alt="Blog">
                         </div>
-                        <div class="card-body">
+                        <div class="p-4">
                             <small class="text-muted">Nov 20, 2024</small>
-                            <h5 class="card-title mt-2">Proteins: An Overview of Mechanism and Erignostine</h5>
-                            <p class="card-text text-muted">Learn about the complex protein mechanisms that are fundamental.</p>
-                            <a href="#" class="primary-color text-decoration-none">Read More <i class="bi bi-arrow-right ms-1"></i></a>
+                            <h5 class="mt-3 mb-3">Proteins: An Overview of Mechanism and Erignostine</h5>
+                            <p class="text-muted">Learn about the complex protein mechanisms that are fundamental.</p>
+                            <a href="#" class="text-decoration-none" style="color: var(--primary-purple);">
+                                Read More <i class="bi bi-arrow-right ms-2"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -314,55 +531,98 @@
     </section>
 
     <!-- Footer -->
-    <footer class="footer text-white py-5">
+    <footer class="footer">
         <div class="container">
-            <div class="row g-4">
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="mb-4">eugia</h4>
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-5">
+                    <h3 class="mb-4">eugia</h3>
                 </div>
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-3 col-md-6 mb-5">
                     <h6 class="text-uppercase mb-4">Quick Links</h6>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">About Us</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Products</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Investors</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Careers</a></li>
-                        <li><a href="#" class="text-white-50 text-decoration-none">Privacy Policy</a></li>
-                    </ul>
+                    <div class="footer-links">
+                        <div><a href="#" class="mb-2 d-inline-block">About Us</a></div>
+                        <div><a href="#" class="mb-2 d-inline-block">Products</a></div>
+                        <div><a href="#" class="mb-2 d-inline-block">Investors</a></div>
+                        <div><a href="#" class="mb-2 d-inline-block">Careers</a></div>
+                        <div><a href="#" class="d-inline-block">Privacy Policy</a></div>
+                    </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-3 col-md-6 mb-5">
                     <h6 class="text-uppercase mb-4">Get in touch</h6>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact Us</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Locations</a></li>
-                        <li><a href="#" class="text-white-50 text-decoration-none">Support & Queries</a></li>
-                    </ul>
+                    <div class="footer-links">
+                        <div><a href="#" class="mb-2 d-inline-block">Contact Us</a></div>
+                        <div><a href="#" class="mb-2 d-inline-block">Locations</a></div>
+                        <div><a href="#" class="d-inline-block">Support & Queries</a></div>
+                    </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-3 col-md-6 mb-5">
                     <h6 class="text-uppercase mb-4">Be the first to know!</h6>
                     <p class="text-white-50">Get Eugia updates delivered straight to your inbox.</p>
-                    <form class="mt-4">
-                        <div class="input-group mb-3">
-                            <input type="email" class="form-control" placeholder="Enter your email">
-                            <button class="btn btn-outline-light" type="submit">Subscribe</button>
-                        </div>
-                    </form>
+                    <div class="subscribe-form mt-4">
+                        <input type="email" placeholder="Enter your email" class="form-control">
+                        <button type="submit">Subscribe Now</button>
+                    </div>
                 </div>
             </div>
-            <hr class="my-4 border-white border-opacity-25">
-            <div class="row align-items-center">
-                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                    <p class="mb-0 text-white-50">&copy; 2024 Eugia Pharma. All Rights Reserved.</p>
-                </div>
-                <div class="col-md-6 text-center text-md-end">
-                    <a href="#" class="text-white-50 me-3"><i class="bi bi-facebook"></i></a>
-                    <a href="#" class="text-white-50 me-3"><i class="bi bi-twitter"></i></a>
-                    <a href="#" class="text-white-50"><i class="bi bi-instagram"></i></a>
+            <div class="border-top border-white border-opacity-25 py-4 mt-4">
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        <p class="mb-0 text-white-50">&copy; 2024 Eugia Pharma. All Rights Reserved.</p>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <a href="#" class="text-white-50 me-3"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-white-50 me-3"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="text-white-50"><i class="bi bi-instagram"></i></a>
+                    </div>
                 </div>
             </div>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Add stars to well-being section
+        const wellBeingSection = document.querySelector('.well-being-section');
+        for (let i = 0; i < 50; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.animation = `twinkle ${Math.random() * 3 + 2}s infinite`;
+            wellBeingSection.appendChild(star);
+        }
+
+        // Add smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Update active dot on scroll
+        const sections = document.querySelectorAll('section');
+        const dots = document.querySelectorAll('.hero-dot');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - sectionHeight / 3)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            dots.forEach((dot, index) => {
+                dot.classList.remove('active');
+                if (index === 0 && !current) {
+                    dot.classList.add('active');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
